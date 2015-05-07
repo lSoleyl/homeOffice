@@ -29,6 +29,14 @@
     -->
 
     <!--STYLES-->
+    <link rel="stylesheet" href="/styles/0-jquery-ui.min.css">
+    <link rel="stylesheet" href="/styles/1-bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/2-bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/styles/3-bootstrap-table.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap-table.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/custom.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/jquery-ui.min.css">
     <!--STYLES END-->
@@ -57,13 +65,17 @@
     -->
 
     <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <script src="/js/jquery-2.1.4.min.js"></script>
-    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/dependencies/0-jquery-2.1.4.min.js"></script>
+    <script src="/js/dependencies/1-jquery-ui.min.js"></script>
+    <script src="/js/dependencies/2-bootstrap.min.js"></script>
+    <script src="/js/dependencies/3-bootstrap-table.min.js"></script>
+    <script src="/js/dependencies/4-sails.io.js"></script>
     <!--SCRIPTS END-->
   </head>
 
   <body>
+    <div class="container">
+
     <%- body %>
 
 
@@ -91,5 +103,6 @@
     <!--TEMPLATES-->
     
     <!--TEMPLATES END-->    
+    </div>
   </body>
 </html>
