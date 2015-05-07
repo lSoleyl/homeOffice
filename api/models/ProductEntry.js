@@ -6,8 +6,6 @@
 */
 
 module.exports = {
-  identity: 'productentry',
-
   attributes: {
 
     product : { model: 'product' },
