@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Verknüpfung mit Home Office
+Type=Link
+URL=http://localhost:1337/Shop/test
+Icon=text-html
+Name[de_DE]=Test-Seite
