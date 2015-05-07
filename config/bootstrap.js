@@ -11,7 +11,27 @@
 
 module.exports.bootstrap = function(cb) {
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+
+
+  if (sails.config.environment == 'development') { //clear database and populate it with default values
+    var models = [Shop, Product, ProductEntry]
+
+    console.log("Clearing database for development environment...")
+    async.each(models, 
+      function(model, callback) { model.destroy({}).exec(callback)}, 
+      function(err) {
+        if (err)
+          return cb(err)
+
+        console.log("Populating database with test values...")
+
+        var shops = [{name:'LIDL'}, {name:'ALDI'}, {name:'EDEKA'}]
+
+        Shop.create(shops).exec(cb)
+      })
+  } else {
+    // It's very important to trigger this callback method when you are finished
+    // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+    cb();
+  }
 };
