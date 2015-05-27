@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-    name  : { type: 'string' },
+    name  : { 
+      type: 'string',
+      unique: true
+    },
     unit  : { type: 'string' },
     shops : {
       collection: 'shop',
