@@ -6,8 +6,13 @@
  */
 
 module.exports = {
-	index: function(req, res) {
-    return res.send("hi")
+	index: function(req, res) { //List all shops
+    Shop.find().populate('products').exec(function(e,shops) {
+      shops.forEach(function (shop) {
+        shop.products = shop.products ? shop.products.length : 0
+      })
+      return res.view("shop/list", shops)
+    })
   },
 
 

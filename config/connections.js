@@ -32,7 +32,7 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-  /***************************************************************************
+  /**********************************************localDiskDb*****************************
   *                                                                          *
   * MySQL is the world's most popular relational database.                   *
   * http://en.wikipedia.org/wiki/MySQL                                       *
