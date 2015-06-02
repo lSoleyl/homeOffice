@@ -2,10 +2,6 @@
  */
 
 module.exports = {
-  /* TODO also handle following get parameters: 
-   *  - sort=[field]
-   *  - order={asc|desc}
-   */
   index: function(req, res) { //Return a JSON-List of all shops
     Shop.find().populate('products').exec(function(err,shops) {
       if (err)

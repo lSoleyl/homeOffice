@@ -1,10 +1,39 @@
-<h2>Shopliste</h2>
+<h2><%= __('shop_list') %></h2>
 
-<table data-toggle="table" data-cache="false" data-url="/json/shop" data-sort-name="name">
+<table id="data-table" data-toggle="table" data-cache="false" data-url="/json/shop" data-sort-name="name" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-click-to-select="true" data-pagination="true">
   <thead>
     <tr>
-      <th data-field="name" data-align="left" data-sortable="true">Name</th>
-      <th data-field="products"               data-sortable="true">Bekannte Produkte</th>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="name" data-align="left" data-sortable="true"><%= __('shop_name') %></th>
+      <th data-field="products"               data-sortable="true"><%= __('shop_known_products') %></th>
     </tr>
   </thead>
 </table>
+<div id="buttons">
+  <div class="btn btn-default" id="delete"><%= __("btn_delete") %></div> <!-- TODO only show if table is loaded -->
+</div>
+
+<script>
+$(function() {
+  var table = $('#data-table')
+
+  $('#delete').click(function() {
+    var selected = table.bootstrapTable('getSelections')
+    
+    if (selected.length > 0) {
+      BootstrapDialog.confirm({
+        message: "<%= __('dlg_delete?') %>",
+        type: BootstrapDialog.TYPE_WARNING,
+        closable:true,
+
+        callback: function(result) {
+         //TODO issue Ajax-request for deleting the entries
+        }
+      });
+    }
+  })
+
+
+
+}) 
+</script>

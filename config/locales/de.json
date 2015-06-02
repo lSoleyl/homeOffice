@@ -1,4 +1,19 @@
 {
-  "Welcome": "Willkommen",
-  "A brand new app.": "Eine neue App."
+  "shop_list": "Shopliste",
+  "shop_name": "Name",
+  "shop_known_products": "Bekannte Produkte",
+
+  "btn_delete":"Löschen",
+
+  "dlg_delete?":"Sollen die Einträge gelöscht werden?",
+
+  
+  "dlg_title_info":"Information",
+  "dlg_title_warn":"Warnung",
+  "dlg_title_danger":"Achtung!",
+  "dlg_title_success":"Erfolg",
+  
+  "dlg_btn_ok":"OK",
+  "dlg_btn_cancel":"Abbrechen",
+  "dlg_btn_confirm":"Bestätigen"
 }

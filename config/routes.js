@@ -34,7 +34,12 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+
+  //locales
+  'get /json/locales/:id' : 'json/LocalesController.index',
+  'post /json/locales' : 'json/LocalesController.list'
+
 
   /***************************************************************************
   *                                                                          *
