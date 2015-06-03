@@ -9,9 +9,9 @@
     </tr>
   </thead>
 </table>
-<div id="buttons">
-  <div class="btn btn-default" id="delete"><%= __("btn_delete") %></div> <!-- TODO only show if table is loaded -->
-  <div class="btn btn-default" id="show"><%= __("btn_show") %></div> <!-- TODO only enabled, if exactly one entry is selected -->
+<div id="buttons" style="display:none">
+  <button type="button" class="btn btn-default" disabled="disabled" id="delete"><%= __("btn_delete") %></button>
+  <button type="button" class="btn btn-default" disabled="disabled" id="show"><%= __("btn_show") %></button>
 </div>
 
 <script>
@@ -21,20 +21,45 @@ $(function() {
   $('#delete').click(function() {
     var selectedEntries = table.bootstrapTable('getSelections')
     
-    if (selectedEntries.length > 0) {
-      BootstrapDialog.confirm({
-        message: "<%= __('dlg_delete?') %>",
-        type: BootstrapDialog.TYPE_WARNING,
-        closable:true,
+    BootstrapDialog.confirm("<%= __('dlg_delete?') %>", function(confirmed) {
+      if (confirmed) {
+        var ids = _.map(selectedEntries, function(entry) { return entry.id })
+        Ajax.delete("/json/shop", ids, function(err, res) {
+          if (err) {
+            console.error("" + err)
+            return BootstrapDialog.error("<%= __('dlg_deletion_failed') %>")
+          }
 
-        callback: function(result) {
-          
-        }
-      });
-    }
+          BootstrapDialog.success(res.affectedRecords + " <%= __('dlg_deleted_entries') %>")
+          table.bootstrapTable('refresh')
+        })
+      }
+    })
   })
 
 
+  //Table event handler for changes in checked lines
+  function checkButtons() {
+    var selectedEntries = table.bootstrapTable('getSelections')
+    if (selectedEntries.length == 0) {
+      $("#delete,#show").attr({disabled:true})
+    } else if (selectedEntries.length == 1) {
+      $("#delete,#show").attr({disabled:false})
+    } else {
+      $("#delete").attr({disabled:false})
+      $("#show").attr({disabled:true})
+    }
+  }
 
+
+  //Subscribe to table events
+  table.bootstrapTable({}).
+    on('all.bs.table', function(e,name,args) {
+      if (name.indexOf('check') != -1)
+        checkButtons()
+    }).on('load-success.bs.table', function() {
+      $("#buttons").show() //display the button bar, once loading is complete
+      checkButtons()
+    })
 }) 
 </script>

@@ -7,12 +7,15 @@
   "btn_show":"Anzeigen",
 
   "dlg_delete?":"Sollen die Einträge gelöscht werden?",
+  "dlg_deletion_failed":"Einträge konnten nicht gelöscht werden!",
+  "dlg_deleted_entries":"Einträge gelöscht",
 
   
   "dlg_title_info":"Information",
   "dlg_title_warn":"Warnung",
   "dlg_title_danger":"Achtung!",
-  "dlg_title_success":"Erfolg",
+  "dlg_title_error":"Fehler!",
+  "dlg_title_success":"Operation erfolgreich",
   
   "dlg_btn_ok":"OK",
   "dlg_btn_cancel":"Abbrechen",

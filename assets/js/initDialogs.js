@@ -7,6 +7,7 @@ var localeKeys = [
   "dlg_title_warn", 
   "dlg_title_danger", 
   "dlg_title_success",
+  "dlg_title_error",
   "dlg_btn_ok",
   "dlg_btn_cancel",
   "dlg_btn_confirm"
@@ -29,4 +30,61 @@ Ajax.post('/json/locales', localeKeys, function(err, t) {
   BootstrapDialog.DEFAULT_TEXTS['OK'] = t["dlg_btn_ok"]
   BootstrapDialog.DEFAULT_TEXTS['CANCEL'] = t["dlg_btn_cancel"]
   BootstrapDialog.DEFAULT_TEXTS['CONFIRM'] = t["dlg_btn_confirm"]
+
+  //Define timeouts
+  BootstrapDialog.DEFAULT_TIMEOUTS = {}
+  BootstrapDialog.DEFAULT_TIMEOUTS[BootstrapDialog.TYPE_INFO   ] = 2000
+  BootstrapDialog.DEFAULT_TIMEOUTS[BootstrapDialog.TYPE_SUCCESS] = 2000
+  //All other types don't have timeouts set (for now)
+
+  BootstrapDialog.BUTTONS = {}
+  BootstrapDialog.BUTTONS.OK =      { label: BootstrapDialog.DEFAULT_TEXTS.OK,      action:function(dialog) { dialog.close() }}
+  BootstrapDialog.BUTTONS.CANCEL  = { label: BootstrapDialog.DEFAULT_TEXTS.CANCEL,  action:function(dialog) { dialog.close() }}
+  BootstrapDialog.BUTTONS.CONFIRM = { label: BootstrapDialog.DEFAULT_TEXTS.CONFIRM, action:function(dialog) { dialog.confirmed = true; dialog.close() }}
+
+  //Generic function to generate 
+  function genericDialog(type, text, cb, timeout) {
+    timeout = (timeout === undefined) ? BootstrapDialog.DEFAULT_TIMEOUTS[type] : timeout
+
+    if (cb && typeof cb != "function")
+      return console.error("Expected a callback, but got: " + cb)
+
+    var dlgObj = {
+      type: type,
+      closable: true,
+      message: text
+    }
+
+    //extend dialog with timeout and callback
+    if (cb) dlgObj.onhidden = function(dialog) { cb(!!dialog.confirmed) }
+    if (timeout) dlgObj.onshown = function(dialog) { setTimeout(function() { dialog.close() }, timeout) }
+
+    return dlgObj
+  }
+
+
+  //Custom dialog functions
+  BootstrapDialog.error = function(text, cb, timeout) {
+    var dialog = genericDialog(BootstrapDialog.TYPE_DANGER, text, cb, timeout)
+    dialog.title = t["dlg_title_error"]
+    dialog.buttons = [ BootstrapDialog.BUTTONS.OK ]
+    return BootstrapDialog.show(dialog)
+  }
+
+  //A dialog which is automatically closing
+  BootstrapDialog.info = function(text, cb, timeout) {
+    var dialog = genericDialog(BootstrapDialog.TYPE_INFO, text, cb, timeout)
+    return BootstrapDialog.show(dialog)
+  }
+
+  BootstrapDialog.success = function(text, cb, timeout) {
+    var dialog = genericDialog(BootstrapDialog.TYPE_SUCCESS, text, cb, timeout)
+    return BootstrapDialog.show(dialog)
+  }
+
+  BootstrapDialog.confirm = function(text, cb, timeout) {
+    var dialog = genericDialog(BootstrapDialog.TYPE_WARNING, text, cb, timeout)
+    dialog.buttons = [ BootstrapDialog.BUTTONS.CANCEL, BootstrapDialog.BUTTONS.CONFIRM ]
+    return BootstrapDialog.show(dialog)
+  }
 })
