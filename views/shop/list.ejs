@@ -11,6 +11,7 @@
 </table>
 <div id="buttons">
   <div class="btn btn-default" id="delete"><%= __("btn_delete") %></div> <!-- TODO only show if table is loaded -->
+  <div class="btn btn-default" id="show"><%= __("btn_show") %></div> <!-- TODO only enabled, if exactly one entry is selected -->
 </div>
 
 <script>
@@ -18,16 +19,16 @@ $(function() {
   var table = $('#data-table')
 
   $('#delete').click(function() {
-    var selected = table.bootstrapTable('getSelections')
+    var selectedEntries = table.bootstrapTable('getSelections')
     
-    if (selected.length > 0) {
+    if (selectedEntries.length > 0) {
       BootstrapDialog.confirm({
         message: "<%= __('dlg_delete?') %>",
         type: BootstrapDialog.TYPE_WARNING,
         closable:true,
 
         callback: function(result) {
-         //TODO issue Ajax-request for deleting the entries
+          
         }
       });
     }
