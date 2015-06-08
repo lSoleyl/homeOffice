@@ -3,6 +3,10 @@
   "shop_name": "Name",
   "shop_known_products": "Bekannte Produkte",
 
+  "product_list": "Produktliste",
+  "product_name": "Name",
+  "product_available_in": "Verfügbar in",
+
   "btn_delete":"Löschen",
   "btn_show":"Anzeigen",
 

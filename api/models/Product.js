@@ -22,6 +22,16 @@ module.exports = {
       collection: 'productentry',
       via: 'product'
     }
+  },
+
+  /** This function returns a list of 
+   */
+  currentPrices: function(product) {
+    var grouped = _.groupBy(product.prices, function(entry) { return entry.shop })
+
+    _.map(grouped, function(entries, shop) {
+      //TODO get most recent entry from the entries and set it as current price for the current shop
+    })
   }
 };
 
