@@ -18,23 +18,17 @@
 $(function() {
   var table = $('#data-table')
 
-  $('#delete').click(function() {
-    var selectedEntries = table.bootstrapTable('getSelections')
-    
-    BootstrapDialog.confirm("<%= __('dlg_delete?') %>", function(confirmed) {
-      if (confirmed) {
-        var ids = _.map(selectedEntries, function(entry) { return entry.id })
-        Ajax.delete("/json/shop", ids, function(err, res) {
-          if (err) {
-            console.error("" + err)
-            return BootstrapDialog.error("<%= __('dlg_deletion_failed') %>")
-          }
+  $('#delete').click(Common.Button.delete("/json/shop/delete", function() {
+    var entries = table.bootstrapTable('getSelections')
+    return _.map(entries, function(entry) { return entry.id })
+  }, table))
 
-          BootstrapDialog.success(res.affectedRecords + " <%= __('dlg_deleted_entries') %>")
-          table.bootstrapTable('refresh')
-        })
-      }
-    })
+
+  $('#show').click(function() {
+    var selectedEntries = table.bootstrapTable('getSelections')
+    if (selectedEntries.length) {
+      document.location.href = "/shop/view/" + selectedEntries[0].id
+    }
   })
 
 

@@ -18,12 +18,16 @@ module.exports = {
 
   },
 
+  //FIXME error that json can't be parsed, when just a number is passed in the request body
   delete: function(req, res) { //Deletes the given shops
     var ids = (_.isNumber(req.body)) ? [ req.body ] : req.body
 
 
-    if (! _.all(ids, _.isNumber)) //Validate id array (to prevent someone from entering criteria objects)
+    if (!ids || ! _.all(ids, _.isNumber)) //Validate id array (to prevent someone from entering criteria objects)
       return res.badRequest("Expected list of ids to delete")
+
+    if (!ids.length || ids.length == 0)
+      return res.badRequest("Expected not empty list of ids to delete")
 
     Shop.destroy(ids).exec(function(err, records) {
       if (err) {
@@ -35,6 +39,4 @@ module.exports = {
       return res.json({ affectedRecords:records.length })
     })
   }
-
-
 }

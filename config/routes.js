@@ -39,12 +39,8 @@ module.exports.routes = {
   //locales
   
   'get /json/locales/:id' : 'json/LocalesController.index',
-  'post /json/locales' : 'json/LocalesController.list',
-
-
-  'delete /json/shop': 'json/ShopController.delete'
-
-
+  'post /json/locales' : 'json/LocalesController.list'
+  
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

@@ -14,8 +14,7 @@ var localeKeys = [
 ]
 
 //TODO maybe add a BootstrapDialog.ready() function which triggers all functions when the texts have been initialized
-
-Ajax.post('/json/locales', localeKeys, function(err, t) {
+Ajax.locales(localeKeys, function(err, t) {
   if (err)
     return console.err("Failed to initialize Bootstrap dialogs!")
 

@@ -1,0 +1,11 @@
+<h2><%= shop.name %></h2>
+
+<button class="btn btn-default" id="delete"><%= __('btn_delete') %></button>
+
+
+<script>
+  $('#delete').click(Common.Button.delete("/json/shop/delete", [<%= shop.id %>], "/shop"))
+</script>
+
+
+<!-- TODO display shop attributes properly -->

@@ -22,6 +22,11 @@ var AjaxHelper = {
 
 
 var Ajax = {
+  //Shortcut to look up locales
+  locales: function(locales, callback) {
+    return this.post('/json/locales', locales, callback)
+  },
+
   post:  function(url, params, callback, override) {
     return this.request('POST', url, params, callback, override)
   },
