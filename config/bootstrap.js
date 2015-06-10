@@ -8,9 +8,7 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-
 module.exports.bootstrap = function(cb) {
-
 
 
   if (sails.config.environment == 'development') { //clear database and populate it with default values
@@ -26,8 +24,13 @@ module.exports.bootstrap = function(cb) {
         console.log("Populating database with test values...")
 
         var shops = [{name:'LIDL'}, {name:'ALDI'}, {name:'EDEKA'}]
+        var products = [{name:'Milch', unit:'L'}, {name:'O-Saft', unit:'L'}, {name:'Kartoffeln', unit:'kg'}]
 
-        Shop.create(shops).exec(cb)
+        //Create bound queries
+        var queries = _.map([ Shop.create(shops), Product.create(products) ], function(q) { return q.exec.bind(q) })
+
+
+        async.parallel(queries, cb)
       })
   } else {
     // It's very important to trigger this callback method when you are finished
