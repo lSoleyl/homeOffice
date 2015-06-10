@@ -12,7 +12,7 @@ module.exports.bootstrap = function(cb) {
 
 
   if (sails.config.environment == 'development') { //clear database and populate it with default values
-    var models = [Shop, Product, ProductEntry]
+    var models = [Shop, Product, ProductEntry, Person, ShoppingList, ShoppingListEntry]
 
     console.log("Clearing database for development environment...")
     async.each(models, 
@@ -25,9 +25,14 @@ module.exports.bootstrap = function(cb) {
 
         var shops = [{name:'LIDL'}, {name:'ALDI'}, {name:'EDEKA'}]
         var products = [{name:'Milch', unit:'L'}, {name:'O-Saft', unit:'L'}, {name:'Kartoffeln', unit:'kg'}]
+        var people = [{name:'John'}, {name:'Yuno'}]
 
         //Create bound queries
-        var queries = _.map([ Shop.create(shops), Product.create(products) ], function(q) { return q.exec.bind(q) })
+        var queries = _.map([ 
+            Shop.create(shops), 
+            Product.create(products) ,
+            Person.create(people)
+          ], function(q) { return q.exec.bind(q) })
 
 
         async.parallel(queries, cb)
