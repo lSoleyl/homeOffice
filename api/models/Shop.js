@@ -17,6 +17,11 @@ module.exports = {
       collection: 'productentry',
       via: 'shop'
     }
+  },
+
+  afterDestroy: function(destroyedRecords, callback) { //This is called whenever a Shop is deleted
+    //TODO delete ProductEntries
+    callback(null);
   }
 };
 
