@@ -1,11 +1,11 @@
 <h2><%= __('product_list') %></h2>
 
-<table id="data-table" data-toggle="table" data-cache="false" data-url="/json/shop" data-sort-name="name" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-click-to-select="true" data-pagination="true">
+<table id="data-table" data-toggle="table" data-cache="false" data-url="/json/product" data-sort-name="name" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-click-to-select="true" data-pagination="true">
   <thead>
     <tr>
       <th data-field="state" data-checkbox="true"></th>
       <th data-field="name" data-align="left" data-sortable="true"><%= __('product_name') %></th>
-      <th data-field="products"               data-sortable="true"><%= __('product_available_in') %></th>
+      <th data-field="prices" data-formatter="count" data-sortable="true"><%= __('product_available_in') %></th>
     </tr>
   </thead>
 </table>
@@ -15,10 +15,15 @@
 </div>
 
 <script>
+ function count(array) {
+   return array.length || "-"
+ }
+
+
 $(function() {
   var table = $('#data-table')
 
-  $('#delete').click(Common.Button.delete("/json/shop/delete", function() {
+  $('#delete').click(Common.Button.delete("/json/product/delete", function() {
     var entries = table.bootstrapTable('getSelections')
     return _.map(entries, function(entry) { return entry.id })
   }, table))
@@ -27,7 +32,7 @@ $(function() {
   $('#show').click(function() {
     var selectedEntries = table.bootstrapTable('getSelections')
     if (selectedEntries.length) {
-      document.location.href = "/shop/view/" + selectedEntries[0].id
+      document.location.href = "/product/view/" + selectedEntries[0].id
     }
   })
 

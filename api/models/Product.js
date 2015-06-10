@@ -24,14 +24,16 @@ module.exports = {
     }
   },
 
-  /** This function returns a list of 
+  /** This function extracts the current prices
    */
   currentPrices: function(product) {
     var grouped = _.groupBy(product.prices, function(entry) { return entry.shop })
 
-    _.map(grouped, function(entries, shop) {
-      //TODO get most recent entry from the entries and set it as current price for the current shop
+    product.prices = _.map(grouped, function(entries, shop) {
+      return _.max(entries, function(x) { return x.since })
     })
+
+    return product
   }
 };
 
