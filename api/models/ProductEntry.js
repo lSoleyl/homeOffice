@@ -8,10 +8,11 @@
 module.exports = {
   attributes: {
 
-    product : { model: 'product' },
-    shop:     { model: 'shop'    },
-    price :   { type:  'integer' },
-    since:    { type:  'date'    }
+    product :   { model: 'product' },
+    shop:       { model: 'shop'    },
+    price :     { type:  'integer' },
+    since:      { type:  'date'    },
+    unitFactor: { type:  'float'   } //eg. 1.5 -> 1 Unit of that product contains 1.5L or so
   }
 };
 
