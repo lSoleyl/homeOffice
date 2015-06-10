@@ -5,7 +5,10 @@
 
   "product_list": "Produktliste",
   "product_name": "Name",
-  "product_available_in": "Verfügbar in",
+  "product_available_in": "Verfügbar in Läden",
+
+  "person_list": "Personenliste",
+  "person_name": "Name",
 
   "btn_delete":"Löschen",
   "btn_show":"Anzeigen",
