@@ -2,7 +2,9 @@
 
 
 <script>
-  $(".btn-primary").click(function() {
+  $("form").submit(function(event) {
+    event.preventDefault()
+
     Ajax.form($("form"), function(err,obj) {
       if (err) {
         console.error("Object creation failed")

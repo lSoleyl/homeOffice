@@ -106,11 +106,13 @@ Ajax.locales(localeKeys, function(err, t) {
       dialog.onshown = undefined
 
       dialog.onshow = function(dlg) { //Modify dom, before dialog is completely shown
-        var form = dlg.getMessage().find("form")
+        var form = dlg.getMessage().find("form")        
 
-        form.find(".btn-primary").click(function() { //Add click-action to button
+        //Submit form manually
+        form.submit(function(event) {
+          event.preventDefault() //Cancel form submit
+
           dlg.close()
-
           Ajax.form(form, cb)
         })
       }
