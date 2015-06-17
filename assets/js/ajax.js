@@ -59,8 +59,15 @@ var Ajax = {
         throw "No URL has been provided, but <form> has not ajax-target property either"
     }
 
+    //Convert input field data into JSON (name attribute is mandatory for every input element)
     var data = {}
-    form.serializeArray().map(function(x){ data[x.name] = x.value }) //Serialize form
+    _.each(form.serializeArray(), function(entry) {
+      var input = $(form).find('[name="' + entry.name + '"]')
+
+      var name = input.attr('ajax-name') || entry.name //Allow name overwrite with ajax-name
+      data[name] = entry.value
+    })
+
     return Ajax.post(url, data, callback)
   },
 

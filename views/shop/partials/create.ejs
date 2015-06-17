@@ -1,9 +1,14 @@
 <h2><%= __('shop_create') %></h2>
 
+<!-- 
+  Ajax.form() interprets the attributes form[ajax-target] and input[ajax-name]
+  to relieve the caller from explicitly specifying each parameter
+-->
+
 <form role="form" ajax-target="/json/shop/create">
   <div class="form-group">
     <label for="input_shopname"><%= __('shop_name') %></label>
-    <input type="text" class="form-control" name="name" id="input_shopname">
+    <input type="text" class="form-control" name="shop_name" ajax-name="name" id="input_shopname">
   </div>
   <div class="btn btn-primary"><%= __('btn_create') %></div>
 </form>
