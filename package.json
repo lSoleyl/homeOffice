@@ -1,7 +1,7 @@
 {
   "name": "homeOffice",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
@@ -30,8 +30,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/david/homeOffice.git"
+    "url": "git://github.com/lSoleyl/homeOffice.git"
   },
-  "author": "david",
+  "author": "lSoleyl",
   "license": ""
 }
