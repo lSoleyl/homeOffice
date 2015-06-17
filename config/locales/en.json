@@ -1,4 +1,37 @@
 {
-	"Welcome": "Welcome",
-	"A brand new app.": "A brand new app."
+  "shop_list":            "Shop list",
+  "shop_name":            "Name",
+  "shop_create":          "Create shop",
+  "shop_known_products":  "Known products",
+
+  "product_list":         "product list",
+  "product_name":         "Name",
+  "product_available_in": "Available in",
+
+  "person_list":          "People list",
+  "person_name":          "Name",
+
+
+  "btn_delete":           "Delete",
+  "btn_show":             "Show",
+  "btn_create":           "Create",
+  "btn_cancel":           "Cancel",
+
+
+  "dlg_delete?":          "Delete entries?",
+  "dlg_deletion_failed":  "Couldn't delete entries!",
+  "dlg_deleted_entries":  "Entries deleted",
+  "dlg_creation_failed":  "Couldn't create new entry",
+  "dlg_creation_success": "Entry was successfully created",
+  
+  "dlg_title_info":       "Information",
+  "dlg_title_warn":       "Warning",
+  "dlg_title_danger":     "Danger!",
+  "dlg_title_error":      "Error!",
+  "dlg_title_success":    "Operation successfull",
+  "dlg_title_formular":   "Input",
+  
+  "dlg_btn_ok":           "OK",
+  "dlg_btn_cancel":       "Cancel",
+  "dlg_btn_confirm":      "Confirm"
 }
