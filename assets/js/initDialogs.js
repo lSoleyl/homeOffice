@@ -107,11 +107,18 @@ Ajax.locales(localeKeys, function(err, t) {
 
       dialog.onshow = function(dlg) { //Modify dom, before dialog is completely shown
         var form = dlg.getMessage().find("form")
+
         form.find(".btn-primary").click(function() { //Add click-action to button
           dlg.close()
 
           Ajax.form(form, cb)
         })
+      }
+
+      dialog.onshown = function(dlg) { //Somehow focus can only be set here
+        var form = dlg.getMessage().find("form")
+        //Set focus to autofocus element (if any)
+        form.find("[autofocus]").focus()
       }
 
       return BootstrapDialog.show(dialog)
