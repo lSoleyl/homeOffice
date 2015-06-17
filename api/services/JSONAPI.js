@@ -53,7 +53,37 @@
 
 
     //TODO implement 'view' to return detailed information about a single entity
+    
+    /** Generate a callback for object creation by passing an object containing the required fields
+     * 
+     * @param options
+     *          fields:string[] - list of allowed and required fields
+     */
+    create: function(options) {
+      options = options || {}
 
+      return function(req, res) {
+        var model = options.model || eval(this.model)
+
+        //validate input
+        var fields = options.fields || []
+        var object = _.pick(req.body, fields) //Pick out only allowed attributes
+
+        if (! _.all(fields, function(field) { return !!object[field] }))
+          return res.badRequest("object can't be created, because not all required fields were present")
+
+
+        model.create(object).exec(function(err,data) {
+          if (err) {
+            console.error("Coudln't create object: " + JSON.stringify(object) + " (" + model + ")")
+            console.error(err)
+            return res.serverError("Object creation failed")
+          }
+
+          return res.json(data)
+        })
+      }
+    },
 
     /** Generate a callback for object deletion by passing an array of ids
      *

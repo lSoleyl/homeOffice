@@ -44,6 +44,26 @@ var Ajax = {
   },
 
 
+  /** A shorthand function to submit forms via ajax.
+   *
+   * @param url (optional) - the url to post to... if not set, then it will use the properties ajax-target or target
+   * @param form - a jquery wrapped form object
+   * @param callback - the callback to call
+   */
+  form: function(url, form, callback) {
+    if (!callback) { //no url provided
+      callback = form
+      form = url
+      url = form.attr('ajax-target') || form.attr('target')
+      if (!url)
+        throw "No URL has been provided, but <form> has not ajax-target property either"
+    }
+
+    var data = {}
+    form.serializeArray().map(function(x){ data[x.name] = x.value }) //Serialize form
+    return Ajax.post(url, data, callback)
+  },
+
   /** this is a generic method to issue an ajax request.
    * 
    * @param method   [default='GET'] the method to use
