@@ -1,0 +1,9 @@
+<h2><%= __('shop_create') %></h2>
+
+<form role="form" ajax-target="/json/shop/create">
+  <div class="form-group">
+    <label for="input_shopname"><%= __('shop_name') %></label>
+    <input type="text" class="form-control" name="name" id="input_shopname">
+  </div>
+  <div class="btn btn-primary"><%= __('btn_create') %></div>
+</form>

@@ -3,13 +3,17 @@
 module.exports = {
   model: 'Shop',
 
-  //TODO try to get model by name or somehow require it before...
   index: JSONAPI.Controllers.list({
     queryMapper: JSONAPI.QueryMappers.populate('products'),
     objectMapper: function (shop) { 
       shop.products = shop.products.length
       return shop
     }
+  }),
+
+
+  create: JSONAPI.Controllers.create({
+    fields: ["name"]
   }),
 
   delete: JSONAPI.Controllers.delete()

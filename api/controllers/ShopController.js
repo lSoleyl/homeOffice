@@ -10,6 +10,16 @@ module.exports = {
     res.view("shop/list") //Just render the view
   },
 
+  create: function(req, res) {
+    res.view() //Force render view... otherwise a new shop is created
+  },
+
+  partial_create: function(req, res) {
+    res.view("shop/partials/create", {
+      layout:""
+    })
+  },
+
   view: function(req,res) { //Display a single shop
     if (req.params.id) {
       Shop.find({id: req.params.id}).exec(function (err,shops) {

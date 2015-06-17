@@ -1,0 +1,18 @@
+<%- partial('partials/create.ejs') %>
+
+
+<script>
+  $(".btn-primary").click(function() {
+    Ajax.form($("form"), function(err,obj) {
+      if (err) {
+        console.error("Object creation failed")
+        console.error(err)
+        return BootstrapDialog.error("<%= __('dlg_creation_failed') %>")
+      }
+
+      return BootstrapDialog.success("<%= __('dlg_creation_success') %>", function() {
+        document.location.href="/shop" //Redirect on success
+      })
+    })
+  })
+</script>

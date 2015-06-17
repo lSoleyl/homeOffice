@@ -3,7 +3,6 @@
 module.exports = {
   model:'Product', //Define Model for JSONAPI
 
-  //TODO make model in declaration available!
   index: JSONAPI.Controllers.list({
     queryMapper: JSONAPI.QueryMappers.populate('prices'),
     objectMapper: function(product) { return Product.currentPrices(product) } 
