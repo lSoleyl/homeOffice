@@ -21,25 +21,14 @@ module.exports = {
   },
 
   view: function(req,res) { //Display a single shop
-    if (req.params.id) {
-      Shop.find({id: req.params.id}).exec(function (err,shops) {
-        if (err)
-          return res.serverError(err)
-
-        if (shops.length != 1)
-          return res.badRequest("Unknown shop id given")
-
-        var shop = shops[0]
-        var viewObj = {
-          shop: {
-            id: req.params.id,
-            name: shop.name
-          }
-        }
-        
-        return res.view(viewObj)
-      })
-    }
+    Convert.toLocal(sails.controllers['json/shop'].view)(req, function(err, shop) {
+      if (err) {
+        console.error("Error occurred in shop/view:" + err)
+        return res.redirect("/shop")
+      }
+      
+      return res.view({shop:shop})
+    })
   }
 };
 

@@ -16,5 +16,8 @@ module.exports = {
     fields: ["name"]
   }),
 
-  delete: JSONAPI.Controllers.delete()
+  delete: JSONAPI.Controllers.delete(),
+
+
+  view: JSONAPI.Controllers.view() //TODO display more details
 }

@@ -31,6 +31,7 @@
     list: function(options) {
       options = options || {}
       options.dbMapper = options.dbMapper || Convert.fromDatabase
+
       return function(req,res) {
         var model = options.model || eval(this.model)
         var query = model.find()
@@ -51,8 +52,46 @@
       }
     },
 
+    /** Generate the callback function for the JSON view action to show an element of the model
+     *  
+     * @param options
+     *           queryMapper:function(query)   - can be used to call populate, before exec is called
+     *              dbMapper:function(dbObj)   - a function to convert dbObjects into returnable objects. 
+     *                                           default: Convert.fromDatabase()
+     *           objectMapper:function(object) - can be used to convert the object into the result object.
+     *                  model:string           - the model to use for this handler
+     *                                           alternatively set the model property of the controller.
+     */
+    view: function(options) {
+      options = options || {}
+      options.dbMapper = options.dbMapper || Convert.fromDatabase
 
-    //TODO implement 'view' to return detailed information about a single entity
+      return function(req,res) { //Return detailed information about one element
+        if (!req.params.id)
+          return res.badRequest("Missing id parameter")
+
+        var model = options.model || eval(this.model)
+        var query = model.find({id: req.params.id})
+
+        if (options.queryMapper)
+          query = options.queryMapper(query)
+
+        query.exec(function (err,elements) {
+          if (err)
+            return res.serverError(err)
+
+          if (elements.length != 1)
+            return res.badRequest("Unknown shop id given")
+
+          var element = options.dbMapper(elements[0])
+          
+          if (options.objectMapper)
+            element = options.objectMapper(element)
+          
+          return res.json(element)
+        })
+      }
+    },
     
     /** Generate a callback for object creation by passing an object containing the required fields
      * 
