@@ -12,10 +12,9 @@ module.exports = {
       type: 'string',
       unique: true
     },
-    unit  : { type: 'string' },
-    shops : {
-      collection: 'shop',
-      via: 'products'
+    unit  : { 
+      type: 'string',
+      required: true
     },
 
     prices: {
@@ -27,11 +26,8 @@ module.exports = {
   /** This function extracts the current prices
    */
   currentPrices: function(product) {
-    var grouped = _.groupBy(product.prices, function(entry) { return entry.shop })
-
-    product.prices = _.map(grouped, function(entries, shop) {
-      return _.max(entries, function(x) { return x.since })
-    })
+    var grouped = _.groupBy(product.prices, 'shop')
+    product.prices = _.map(grouped, function(entries) { return _.max(entries, 'since') })
 
     return product
   }

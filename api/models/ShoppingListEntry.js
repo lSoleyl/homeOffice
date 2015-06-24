@@ -14,8 +14,7 @@ module.exports = {
     },
 
     product : {
-      model: 'productentry',
-      via: 'shop'
+      model: 'productentry'
     },
 
     amount: 'integer'

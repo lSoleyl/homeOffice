@@ -10,9 +10,9 @@ module.exports = {
 
     product :   { model: 'product' },
     shop:       { model: 'shop'    },
-    price :     { type:  'integer' },
+    price:      { type:  'integer' },
     since:      { type:  'date'    },
-    unitFactor: { type:  'float'   } //eg. 1.5 -> 1 Unit of that product contains 1.5L or so
+    units:      { type:  'float'   } //eg. 1.5 -> 1 Unit of that product contains 1.5L or so
   }
 };
 
