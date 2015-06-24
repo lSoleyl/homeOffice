@@ -4,8 +4,14 @@
   "shop_create":          "Shop anlegen",
   "shop_known_products":  "Bekannte Produkte",
 
+  "shoppinglist_list":    "Einkaufslisten",
+  "shoppinglist_sum":     "Summe",
+  "shoppinglist_paid_by": "Bezahlt von",
+
   "product_list":         "Produktliste",
   "product_name":         "Name",
+  "product_price":        "Preis",
+  "product_amount":       "Menge",
   "product_available_in": "Verfügbar in Läden",
 
   "person_list":          "Personenliste",
@@ -33,5 +39,7 @@
   
   "dlg_btn_ok":           "OK",
   "dlg_btn_cancel":       "Abbrechen",
-  "dlg_btn_confirm":      "Bestätigen"
+  "dlg_btn_confirm":      "Bestätigen",
+
+  "date":                 "Datum"
 }

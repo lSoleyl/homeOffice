@@ -35,7 +35,22 @@ module.exports.bootstrap = function(cb) {
           ], function(q) { return q.exec.bind(q) })
 
 
-        async.parallel(queries, cb)
+        async.parallel(queries, function(err,data) {
+          if (err)
+            return cb(err)
+
+          var dbShops = data[0]
+          var dbProducts = data[1]
+
+          async.series([
+            dbShops[0].registerProduct(dbProducts[0], { price:89 }),
+            dbShops[0].registerProduct(dbProducts[1], { price:90 }),
+            dbShops[0].registerProduct(dbProducts[2], { price:45 }),
+            dbShops[1].registerProduct(dbProducts[0], { price:89 }),
+            dbShops[1].registerProduct(dbProducts[1], { price:95, units:1.5 }),
+            dbShops[1].registerProduct(dbProducts[2], { price:50 })
+          ], cb)
+        })
       })
   } else {
     // It's very important to trigger this callback method when you are finished

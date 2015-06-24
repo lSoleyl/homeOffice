@@ -2,10 +2,25 @@
 
 <button class="btn btn-default" id="delete"><%= __('btn_delete') %></button>
 
+<h3><%= __('shop_known_products') %></h3>
+<table id="data-table" data-toggle="table" data-cache="false" data-url="/json/productentry/forShop/<%= shop.id %>" data-sort-name="product_name" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-click-to-select="true" data-pagination="true">
+  <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="product_name" data-align="left" data-sortable="true"><%= __('product_name') %></th>
+      <th data-field="price" data-formatter="priceFormatter" data-sortable="true"><%= __('product_price') %></th> <!-- TODO Add formatter to units field to display unit -->
+      <th data-field="units"                                              ><%= __('product_amount') %></th>
+      <!-- TODO add column with calculated price per unit -->
+    </tr>
+  </thead>
+</table>
 
 <script>
   $('#delete').click(Common.Button.delete("/json/shop/delete", [<%= shop.id %>], "/shop"))
+
+  function priceFormatter(value) { return "<div>" + Math.floor(value / 100) + "," + (value % 100) + " &euro;</div>" }
 </script>
+
 
 
 <!-- TODO display shop attributes properly -->
