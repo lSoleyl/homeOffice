@@ -25,7 +25,7 @@
      *              dbMapper:function(dbObj)   - a function to convert dbObjects into returnable objects. 
      *                                           default: Convert.fromDatabase()
      *           objectMapper:function(object) - can be used to convert the object into the result object.
-     *                  model:string           - the model to use for this handler
+     *                  model:Model            - the model to use for this handler
      *                                           alternatively set the model property of the controller.
      */
     list: function(options) {
@@ -59,7 +59,7 @@
      *              dbMapper:function(dbObj)   - a function to convert dbObjects into returnable objects. 
      *                                           default: Convert.fromDatabase()
      *           objectMapper:function(object) - can be used to convert the object into the result object.
-     *                  model:string           - the model to use for this handler
+     *                  model:Model            - the model to use for this handler
      *                                           alternatively set the model property of the controller.
      */
     view: function(options) {
@@ -71,7 +71,7 @@
           return res.badRequest("Missing id parameter")
 
         var model = options.model || eval(this.model)
-        var query = model.find({id: req.params.id})
+        var query = model.find({id: parseInt(req.params.id)})
 
         if (options.queryMapper)
           query = options.queryMapper(query)
@@ -127,7 +127,7 @@
     /** Generate a callback for object deletion by passing an array of ids
      *
      * @param options
-     *          model:string - the model to use
+     *          model:Model - the model to use
      */
     delete: function(options) { //FIXME error that json can't be parsed, when just a number is passed in the request body
       options = options || {}
@@ -158,6 +158,40 @@
 
 
 
+  },
+
+  Models: {
+
+    /** This this function returns a resolver function to be used in a model (this must be the model)
+     * 
+     * @param model the model to resolve the id for
+     * @param object the object to look up (id might be int or string)
+     * @param options (optional) 
+     *            - populate:string|array - The field/s which should be populated
+     * @param callback the callback which will be called with the dbObject if lookup was successful, or not 
+     *                 necessary  
+     */
+    resolve:function(model, object, options, callback) {
+      if (!callback) {
+        callback = options
+        options = {}
+      }
+
+      if (typeof object != "number" && typeof object != "string") 
+        return process.nextTick(function() { callback(null, object) })
+
+      //This should be the model itself
+      var query = model.find({'id':parseInt(object)})
+      if (options.populate)
+        query = query.populate(options.populate)
+
+      query.exec(function(err, elements) {
+        if (err || !elements.length)
+          return callback(err || ("object with id " + object + " doesn't exist"))
+
+        callback(null, elements[0]) //find always returns an array, so unpack it
+      })
+    }
   }
 
 
