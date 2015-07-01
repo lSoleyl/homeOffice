@@ -10,26 +10,15 @@ module.exports = {
     res.view("product/list") //Just render the view
   },
 
-  view: function(req,res) { //Display a single shop
-    if (req.params.id) {
-      Product.find({id: req.params.id}).exec(function (err,products) {
-        if (err)
-          return res.serverError(err)
-
-        if (products.length != 1)
-          return res.badRequest("Unknown product id given")
-
-        var product = products[0]
-        var viewObj = {
-          shop: {
-            id: req.params.id,
-            name: product.name
-          }
-        }
-        
-        return res.view(viewObj)
-      })
-    }
+  view: function(req,res) { //Display a single product
+    Convert.toLocal(sails.controllers['json/product'].view)(req, function(err, product) {
+      if (err) {
+        console.error("Error occurred in product/view:" + err)
+        return res.redirect("/product")
+      }
+      
+      return res.view({product:product})
+    })
   }
 };
 

@@ -8,5 +8,7 @@ module.exports = {
     objectMapper: function(product) { return Product.currentPrices(product) } 
   }),
 
+  view: JSONAPI.Controllers.view(),
+
   delete: JSONAPI.Controllers.delete()
 }
