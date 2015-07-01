@@ -5,9 +5,16 @@ module.exports = {
 
   index: JSONAPI.Controllers.list({
     queryMapper: JSONAPI.QueryMappers.populate('prices'),
-    objectMapper: function(product) { return Product.currentPrices(product) } 
+    adbMapper: function(product, callback) { 
+      return product.currentPrices(function(err, prices) {
+        var resObj = Convert.fromDatabase(product)
+        product.prices = prices
+        return callback(null, product)
+      })
+    } 
   }),
 
+  //TODO populate price and shop data in view
   view: JSONAPI.Controllers.view(),
 
   delete: JSONAPI.Controllers.delete()
