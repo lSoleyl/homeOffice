@@ -19,19 +19,29 @@
   Controllers: {
 
     /** Generate the callback function for the JSON index action to list all elements of a model
+     *  Mapper functions have async pendants. If both are passed, then the async version is chosen
      *  
      * @param options
      *           queryMapper:function(query)   - can be used to call populate, before exec is called
      *              dbMapper:function(dbObj)   - a function to convert dbObjects into returnable objects. 
      *                                           default: Convert.fromDatabase()
-     *           objectMapper:function(object) - can be used to convert the object into the result object.
-     *                  model:Model            - the model to use for this handler
+     *             adbMapper:function(dbObj,cb)- an async db mapper
+     *          objectMapper:function(object)  - can be used to convert the object into the result object.
+     *         aobjectMapper:function(object,cb)-async object mapper
+     *                 model:Model             - the model to use for this handler
      *                                           alternatively set the model property of the controller.
      */
     list: function(options) {
       options = options || {}
-      options.dbMapper = options.dbMapper || Convert.fromDatabase
+      options.dbMapper = options.adbMapper 
+                      || (options.dbMapper ? Convert.toAsync(options.dbMapper) : undefined)
+                      || Convert.toAsync(Convert.fromDatabase)
 
+      options.objectMapper = options.aobjectMapper
+                          || (options.objectMapper ? Convert.toAsync(options.objectMapper) : undefined)
+                          || function(obj, cb) { return cb(null, obj) }
+
+      
       return function(req,res) {
         var model = options.model || eval(this.model)
         var query = model.find()
@@ -42,12 +52,18 @@
           if (err)
             res.serverError(err)
 
-          resultArray = _.map(entities, function (dbObject) {
-            var object = options.dbMapper(dbObject)
-            var resultObject = options.objectMapper ? options.objectMapper(object) : object
-            return resultObject
+          async.map(entities, function (dbObject, callback) {
+            async.waterfall([
+              Convert.async.constant(dbObject),
+              options.dbMapper,
+              options.objectMapper
+            ], callback)
+          }, function(err, resultArray) {
+            if (err)
+              return res.serverError(err)
+            return res.json(resultArray)  
           })
-          return res.json(resultArray)
+          
         })
       }
     },
@@ -55,16 +71,25 @@
     /** Generate the callback function for the JSON view action to show an element of the model
      *  
      * @param options
-     *           queryMapper:function(query)   - can be used to call populate, before exec is called
+      *           queryMapper:function(query)   - can be used to call populate, before exec is called
      *              dbMapper:function(dbObj)   - a function to convert dbObjects into returnable objects. 
      *                                           default: Convert.fromDatabase()
-     *           objectMapper:function(object) - can be used to convert the object into the result object.
-     *                  model:Model            - the model to use for this handler
+     *             adbMapper:function(dbObj,cb)- an async db mapper
+     *          objectMapper:function(object)  - can be used to convert the object into the result object.
+     *         aobjectMapper:function(object,cb)-async object mapper
+     *                 model:Model             - the model to use for this handler
      *                                           alternatively set the model property of the controller.
      */
     view: function(options) {
       options = options || {}
-      options.dbMapper = options.dbMapper || Convert.fromDatabase
+      options.dbMapper = options.adbMapper 
+                      || (options.dbMapper ? Convert.toAsync(options.dbMapper) : undefined)
+                      || Convert.toAsync(Convert.fromDatabase)
+
+      options.objectMapper = options.aobjectMapper
+                          || (options.objectMapper ? Convert.toAsync(options.objectMapper) : undefined)
+                          || function(obj, cb) { return cb(null, obj) }
+
 
       return function(req,res) { //Return detailed information about one element
         if (!req.params.id)
@@ -83,12 +108,15 @@
           if (elements.length != 1)
             return res.badRequest("Unknown shop id given")
 
-          var element = options.dbMapper(elements[0])
-          
-          if (options.objectMapper)
-            element = options.objectMapper(element)
-          
-          return res.json(element)
+          async.waterfall([
+            Convert.async.constant(elements[0]),
+            options.dbMapper,
+            options.objectMapper
+          ], function(err, element) {
+            if (err)
+              return res.serverError(err)
+            return res.json(element)
+          })
         })
       }
     },
