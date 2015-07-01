@@ -41,5 +41,12 @@
   "dlg_btn_cancel":       "Abbrechen",
   "dlg_btn_confirm":      "Bestätigen",
 
-  "date":                 "Datum"
+  "date":                 "Datum",
+
+  "nav_toggle_nav":       "Nagivation umschalten",
+  "nav_model":            "Modell",
+  "nav_people":           "Personen",
+  "nav_shops":            "Shops",
+  "nav_products":         "Produkte",
+  "nav_shoppinglists":    "Einkaufslisten"
 }
