@@ -36,7 +36,7 @@ module.exports = {
    */
   forProduct: function(req,res) {
     if (!req.params.id)
-      return res.badRequest("Missing shop id")
+      return res.badRequest("Missing product id")
 
     var id = parseInt(req.params.id)
 
