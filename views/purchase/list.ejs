@@ -1,0 +1,60 @@
+<h2><%= __('purchase_list') %></h2>
+
+<table id="data-table" data-toggle="table" data-cache="false" data-url="/json/purchase" data-sort-name="date" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-click-to-select="true" data-pagination="true">
+  <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="price" data-align="left" data-sortable="true"><%= __('purchase_price') %></th>
+      <th data-field="paidBy" ><%= __('purchase_paid_by') %></th>
+      <th data-field="date"><%= __('purchase_date') %></th>
+    </tr>
+  </thead>
+</table>
+<div id="buttons" style="display:none">
+  <button type="button" class="btn btn-default" disabled="disabled" id="delete"><%= __("btn_delete") %></button>
+  <button type="button" class="btn btn-default" disabled="disabled" id="show"><%= __("btn_show") %></button>
+</div>
+
+<script>
+$(function() {
+  var table = $('#data-table')
+
+  $('#delete').click(Common.Button.delete("/json/purchase/delete", function() {
+    var entries = table.bootstrapTable('getSelections')
+    return _.map(entries, function(entry) { return entry.id })
+  }, table))
+
+
+  $('#show').click(function() {
+    var selectedEntries = table.bootstrapTable('getSelections')
+    if (selectedEntries.length) {
+      document.location.href = "/purchase/view/" + selectedEntries[0].id
+    }
+  })
+
+
+  //Table event handler for changes in checked lines
+  function checkButtons() {
+    var selectedEntries = table.bootstrapTable('getSelections')
+    if (selectedEntries.length == 0) {
+      $("#delete,#show").attr({disabled:true})
+    } else if (selectedEntries.length == 1) {
+      $("#delete,#show").attr({disabled:false})
+    } else {
+      $("#delete").attr({disabled:false})
+      $("#show").attr({disabled:true})
+    }
+  }
+
+
+  //Subscribe to table events
+  table.bootstrapTable({}).
+    on('all.bs.table', function(e,name,args) {
+      if (name.indexOf('check') != -1)
+        checkButtons()
+    }).on('load-success.bs.table', function() {
+      $("#buttons").show() //display the button bar, once loading is complete
+      checkButtons()
+    })
+}) 
+</script>

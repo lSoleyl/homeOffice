@@ -33,5 +33,13 @@
   
   "dlg_btn_ok":           "OK",
   "dlg_btn_cancel":       "Cancel",
-  "dlg_btn_confirm":      "Confirm"
+  "dlg_btn_confirm":      "Confirm",
+
+  "nav_toggle_nav":       "Toggle navigation",
+  "nav_model":            "Model",
+  "nav_people":           "People",
+  "nav_shops":            "Shops",
+  "nav_products":         "Products",
+  "nav_shoppinglists":    "Shopping lists",
+  "nav_purchases":        "Purchases"
 }

@@ -17,6 +17,11 @@
   "person_list":          "Personenliste",
   "person_name":          "Name",
 
+  "purchase_price":       "Preis",
+  "purchase_paid_by":     "Bezahlt von",
+  "purchase_date":        "Kaufdatum",
+  "purchase_list":        "Einkäufe",
+
 
   "btn_delete":           "Löschen",
   "btn_show":             "Anzeigen",
@@ -48,5 +53,6 @@
   "nav_people":           "Personen",
   "nav_shops":            "Shops",
   "nav_products":         "Produkte",
-  "nav_shoppinglists":    "Einkaufslisten"
+  "nav_shoppinglists":    "Einkaufslisten",
+  "nav_purchases":        "Einkäufe"
 }

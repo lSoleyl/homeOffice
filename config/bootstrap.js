@@ -23,15 +23,11 @@ module.exports.bootstrap = function(cb) {
 
         console.log("Populating database with test values...")
 
-        var shops = [{name:'LIDL'}, {name:'ALDI'}, {name:'EDEKA'}]
-        var products = [{name:'Milch', unit:'L'}, {name:'O-Saft', unit:'L'}, {name:'Kartoffeln', unit:'kg'}]
         var people = [{name:'John'}, {name:'Yuno'}]
 
         //Create bound queries
         var queries = _.map([ 
-            Shop.create(shops), 
-            Product.create(products) ,
-            Person.create(people)
+            Person.create(people) //Create base objects here
           ], function(q) { return q.exec.bind(q) })
 
 
@@ -39,17 +35,15 @@ module.exports.bootstrap = function(cb) {
           if (err)
             return cb(err)
 
-          var dbShops = data[0]
-          var dbProducts = data[1]
+          var person = data[0] //Refer to created base objects here
+          
 
-          async.series([
-            dbShops[0].registerProduct(dbProducts[0], { price:89 }),
-            dbShops[0].registerProduct(dbProducts[1], { price:90 }),
-            dbShops[0].registerProduct(dbProducts[2], { price:45 }),
-            dbShops[1].registerProduct(dbProducts[0], { price:89 }),
-            dbShops[1].registerProduct(dbProducts[1], { price:95, units:1.5 }),
-            dbShops[1].registerProduct(dbProducts[2], { price:50 })
-          ], cb)
+          var purchases = [
+            {price:10000, paidBy:person[0], date:new Date()},
+            {price:20000, paidBy:person[1], date:new Date()},
+          ]
+
+          Purchase.create(purchases, cb) //Create purchases
         })
       })
   } else {
