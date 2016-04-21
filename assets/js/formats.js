@@ -5,7 +5,11 @@
 var Formats = {
   //This function converts a cent price into a euro price
   price: function(value) {
-    return "<div>" + Math.floor(value / 100) + "," + (value % 100) + " &euro;</div>"
+    var cents = "" + (value % 100)
+    while (cents.length < 2)
+      cents += "0"
+
+    return "<div>" + Math.floor(value / 100) + "," + cents + " &euro;</div>"
   },
 
   //This function returns a function, which selects a certain property from an object
@@ -20,6 +24,10 @@ var Formats = {
    */
   link: function(object) {
     return "<div><a href=\"" + object.href + "\">" + object.text + "</a></div>"
+  },
+
+  date: function(date) {
+    return "<div>" + (new Date(date)).toLocaleDateString() + "</div>"
   },
 
   inspect: function(value) {

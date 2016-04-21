@@ -14,7 +14,28 @@ var localeKeys = [
   "dlg_btn_confirm",
   "dlg_creation_failed",
   "dlg_creation_success"
-]
+]; //semicolon used to prevent parser error in line 21
+
+
+
+(function() {
+  var waitingCallbacks = []
+
+  BootstrapDialog.ready = function(cb) {
+    waitingCallbacks.push(cb)
+  }
+
+  /** This function calls all waiting functions and replaces the ready function by a 
+   *  simple call of the callback
+   */
+  BootstrapDialog.setReady = function() {
+    BootstrapDialog.ready = function(cb) { async.nextTick(cb) }
+    _.each(waitingCallbacks, function(fn) { fn() })
+    waitingCallbacks = []
+  }
+})()
+
+
 
 //TODO maybe add a BootstrapDialog.ready() function which triggers all functions when the texts have been initialized
 Ajax.locales(localeKeys, function(err, t) {
@@ -140,5 +161,7 @@ Ajax.locales(localeKeys, function(err, t) {
       BootstrapDialog.success(t["dlg_creation_success"], function() { cb(null, data) })
     })
   }
-  
+
+  //Dialogs are ready now
+  BootstrapDialog.setReady()
 })
