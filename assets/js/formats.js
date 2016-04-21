@@ -3,13 +3,9 @@
  *
  */
 var Formats = {
-  //This function converts a cent price into a euro price
+  //This function displays a euro price with a euro sign
   price: function(value) {
-    var cents = "" + (value % 100)
-    while (cents.length < 2)
-      cents += "0"
-
-    return "<div>" + Math.floor(value / 100) + "," + cents + " &euro;</div>"
+    return "<div>" + value + " &euro;</div>"
   },
 
   //This function returns a function, which selects a certain property from an object

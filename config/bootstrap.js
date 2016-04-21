@@ -39,8 +39,9 @@ module.exports.bootstrap = function(cb) {
           
 
           var purchases = [
-            {price:10000, paidBy:person[0], date:new Date()},
-            {price:20000, paidBy:person[1], date:new Date()},
+            {price:100, paidBy:person[0], date:new Date("2016-04-03")},
+            {price:200, paidBy:person[1], date:new Date("2016-04-02")},
+            {price:25 , paidBy:person[1], date:new Date("2016-04-05")},
           ]
 
           Purchase.create(purchases, cb) //Create purchases
