@@ -6,18 +6,19 @@ var Common = {
     /** This function returns a generic delete function to be used with delete buttons
      *  
      * @param deleteURL the baseURL to be used for delete eg. "/json/shop/delete" (HTTP DELETE will be used)
-     * @param ids an array of ids which will be posted as request body to the server
+     * @param ids an array of ids, or a function returning an array of ids,
+     *            which will be posted as request body to the server.
      * @param table_redirecturl either a bootstrap table to refresh, or a redirect-url to redirect to
      */
     delete:function(deleteURL, ids, table_redirecturl) {
       var t = Common.Locales
 
       return function() {
-        ids = (typeof ids == "function") ? ids() : ids
+        var delete_ids = (typeof ids == "function") ? ids() : ids
 
         BootstrapDialog.confirm(t['dlg_delete?'], function(confirmed) {
           if (confirmed) {
-            Ajax.delete(deleteURL, ids, function(err, res) {
+            Ajax.delete(deleteURL, delete_ids, function(err, res) {
               if (err) {
                 console.error("" + err)
                 return BootstrapDialog.error(t['dlg_deletion_failed'])
