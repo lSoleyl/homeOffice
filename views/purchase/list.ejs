@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th data-field="state" data-checkbox="true"></th>
-      <th data-field="price" data-align="left" data-sortable="true"><%= __('purchase_price') %></th>
-      <th data-field="paidBy" ><%= __('purchase_paid_by') %></th>
+      <th data-field="price" data-formatter="Formats.price" data-align="left" data-sortable="true"><%= __('purchase_price') %></th>
+      <th data-field="paidBy" data-formatter="Formats.link"><%= __('purchase_paid_by') %></th>
       <th data-field="date"><%= __('purchase_date') %></th>
     </tr>
   </thead>
@@ -16,6 +16,9 @@
 </div>
 
 <script>
+//FIXME... why error?
+BootstrapDialog.error("FIXME: data-formatter muss mit Funktionsaufrufen umgehen können")
+
 $(function() {
   var table = $('#data-table')
 
@@ -56,5 +59,5 @@ $(function() {
       $("#buttons").show() //display the button bar, once loading is complete
       checkButtons()
     })
-}) 
+})
 </script>

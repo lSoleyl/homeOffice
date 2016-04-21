@@ -8,7 +8,7 @@
     <tr>
       <th data-field="state" data-checkbox="true"></th>
       <th data-field="product_name" data-align="left" data-sortable="true"><%= __('product_name') %></th>
-      <th data-field="price" data-formatter="priceFormatter" data-sortable="true"><%= __('product_price') %></th> <!-- TODO Add formatter to units field to display unit -->
+      <th data-field="price" data-formatter="Formats.price" data-sortable="true"><%= __('product_price') %></th> <!-- TODO Add formatter to units field to display unit -->
       <th data-field="units"                                              ><%= __('product_amount') %></th>
       <!-- TODO add column with calculated price per unit -->
     </tr>
@@ -17,8 +17,6 @@
 
 <script>
   $('#delete').click(Common.Button.delete("/json/shop/delete", [<%= shop.id %>], "/shop"))
-
-  function priceFormatter(value) { return "<div>" + Math.floor(value / 100) + "," + (value % 100) + " &euro;</div>" }
 </script>
 
 

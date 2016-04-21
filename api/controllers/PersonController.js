@@ -29,8 +29,9 @@ module.exports = {
         
         return res.view(viewObj)
       })
-    } 
-    return res.redirect("/person")
+    } else {
+      return res.redirect("/person") //No id given, list all people
+    }
   }
 };
 
