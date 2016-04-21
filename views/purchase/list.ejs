@@ -13,19 +13,17 @@
 <div id="buttons" style="display:none">
   <button type="button" class="btn btn-default" disabled="disabled" id="delete"><%= __("btn_delete") %></button>
   <button type="button" class="btn btn-default" disabled="disabled" id="show"><%= __("btn_show") %></button>
+  <button type="button" class="btn btn-default" id="create"><%= __('btn_create') %></button>
 </div>
 
 <script>
-BootstrapDialog.ready(function() {
-  BootstrapDialog.error("FIXME: data-formatter muss mit Funktionsaufrufen umgehen können")
-})
 
 $(function() {
   var table = $('#data-table')
 
   $('#delete').click(Common.Button.delete("/json/purchase/delete", function() {
     var entries = table.bootstrapTable('getSelections')
-    return _.map(entries, function(entry) { return entry.id })
+    return _.map(entries, "id")
   }, table))
 
 
@@ -34,6 +32,13 @@ $(function() {
     if (selectedEntries.length) {
       document.location.href = "/purchase/view/" + selectedEntries[0].id
     }
+  })
+
+  $('#create').click(function() {
+    BootstrapDialog.createForm('purchase/partial_create', function(err,data) {
+      if (data)
+        table.bootstrapTable('refresh')
+    });
   })
 
 

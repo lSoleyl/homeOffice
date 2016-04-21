@@ -1,0 +1,30 @@
+<h2><%= __('purchase_create') %></h2>
+
+<!-- 
+  Ajax.form() interprets the attributes form[ajax-target] and input[ajax-name]
+  to relieve the caller from explicitly specifying each parameter
+-->
+
+<form role="form" ajax-target="/json/purchase/create">
+  <div class="form-group">
+    <label for="input_price"><%= __('purchase_price') %></label>
+    <div class="input-group">
+      <input type="number" class="form-control" name="price" id="input_price" autofocus="autofocus">  
+      <span class="input-group-addon">&euro;</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input_date"><%= __('purchase_date') %></label>
+    <input type="date" class="form-control" name="date" id="input_date" value="<%- (new Date()).toISOString().substr(0,10) %>">
+  </div>
+  <div class="alert alert-danger">
+    Input fields: paidBy and description are still missing
+  </div>
+  <!-- TODO paidBy...
+       This field will be the most complex field of the Purchase-creation, because we need a list of available people.
+       Best way would be to fetch the list via ajax request and cache it in localStorage?
+       Or maybe only cache the last selected person and fetch the people inside the controller... don't know whether I can pass locals to a partial.
+
+  -->
+  <button type="submit" class="btn btn-primary"><%= __('btn_create') %></button>
+</form>
