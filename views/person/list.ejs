@@ -11,6 +11,7 @@
 <div id="buttons" style="display:none">
   <button type="button" class="btn btn-default" disabled="disabled" id="delete"><%= __("btn_delete") %></button>
   <button type="button" class="btn btn-default" disabled="disabled" id="show"><%= __("btn_show") %></button>
+  <button type="button" class="btn btn-default" id="create"><%= __("btn_create") %></button>
 </div>
 
 <script>
@@ -28,6 +29,13 @@ $(function() {
     if (selectedEntries.length) {
       document.location.href = "/person/view/" + selectedEntries[0].id
     }
+  })
+
+  $('#create').click(function() {
+    BootstrapDialog.createForm('person/partial_create', function(err,data) {
+      if (data)
+        table.bootstrapTable('refresh')
+    });
   })
 
 

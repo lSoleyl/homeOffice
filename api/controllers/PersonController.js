@@ -10,6 +10,15 @@ module.exports = {
     res.view("person/list") //Just render the view
   },
 
+  create: function(req, res) {
+    res.view() //Just render the default view
+  },
+
+  //Used to display creation form inside a BootstrapDialog
+  partial_create: function(req, res) {
+    res.view("person/partials/create", {layout:""}) //don't render a layout
+  },
+
   view: function(req,res) { //Display a single person
     if (req.params.id) {
       Person.find({id: req.params.id}).exec(function (err,people) {

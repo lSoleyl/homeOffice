@@ -17,10 +17,7 @@ module.exports = {
         layout:"", //Don't use layout(scripts etc.), only return partial's HTML
         people: _.map(people, function(x) { return _.omit(x, ['createdAt', 'updatedAt']) })
       })
-    })
-
-
-    
+    })    
   },
 
   create: function(req, res) { //Overwrite default route, which would create a Purchase object

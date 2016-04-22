@@ -1,0 +1,15 @@
+<h2><%= __('person_create') %></h2>
+
+<!-- 
+  Ajax.form() interprets the attributes form[ajax-target] and input[ajax-name]
+  to relieve the caller from explicitly specifying each parameter
+-->
+
+<form role="form" ajax-target="/json/person/create">
+  <div class="form-group">
+    <label for="input_name"><%= __('person_name') %></label>
+    <input type="text" class="form-control" name="name" id="input_name" autofocus="autofocus">
+  </div>
+
+  <button type="submit" class="btn btn-primary"><%= __('btn_create') %></button>
+</form>
