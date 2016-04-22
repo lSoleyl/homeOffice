@@ -124,7 +124,9 @@
     /** Generate a callback for object creation by passing an object containing the required fields
      * 
      * @param options
-     *          fields:string[] - list of allowed and required fields
+     *          fields:string[]   - list of allowed fields
+     *          required:string[] - list of all required fields (default = fields)
+     *          optional:string[] - list of all optional fields (default = none)
      */
     create: function(options) {
       options = options || {}
@@ -136,13 +138,22 @@
         var fields = options.fields || []
         var object = _.pick(req.body, fields) //Pick out only allowed attributes
 
-        if (! _.all(fields, function(field) { return !!object[field] }))
+
+        var optional = options.optional || []      
+        if (!options.optional && options.required) //optional not set, but required set
+          optional = _.difference(fields, options.required) //fields - required = optional
+
+        var required = options.required || _.difference(fields, optional) //fields - optional  = required
+
+        if (! _.all(required, function(field) { return !!object[field] }))
           return res.badRequest("object can't be created, because not all required fields were present")
 
+        //Remove all optional fields with empty values
+        object = _.omit(object, _.filter(optional, function(field) { return object[field] === "" }))
 
         model.create(object).exec(function(err,data) {
           if (err) {
-            console.error("Coudln't create object: " + JSON.stringify(object) + " (" + model + ")")
+            console.error("Couldn't create object: " + JSON.stringify(object) + " (" + model + ")")
             console.error(err)
             return res.serverError("Object creation failed")
           }

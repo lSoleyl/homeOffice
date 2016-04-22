@@ -22,6 +22,7 @@
   "purchase_date":        "Kaufdatum",
   "purchase_list":        "Einkäufe",
   "purchase_create":      "Einkauf eintragen",
+  "purchase_description": "Beschreibung",
 
 
   "btn_delete":           "Löschen",

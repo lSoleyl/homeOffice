@@ -13,6 +13,11 @@ module.exports = {
       return purchase
     }
    }),
+
+  create: JSONAPI.Controllers.create({
+    fields: ['price', 'date', 'paidBy', 'description'],
+    optional: ['description']
+  }),
   
   delete: JSONAPI.Controllers.delete()
 }

@@ -9,7 +9,7 @@
 module.exports = {
 
   attributes: {
-    price: { type: 'integer', required:true }, //in cents
+    price: { type: 'integer', required:true }, //in euro
     paidBy: { model:'person', required:true },
     description: { type: 'string', required:false },
     date: { type:'date', required:true }

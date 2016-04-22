@@ -17,14 +17,20 @@
     <label for="input_date"><%= __('purchase_date') %></label>
     <input type="date" class="form-control" name="date" id="input_date" value="<%- (new Date()).toISOString().substr(0,10) %>">
   </div>
-  <div class="alert alert-danger">
-    Input fields: paidBy and description are still missing
+  <div class="alert alert-info">
+    Remembering last choice not implemented yet
   </div>
-  <!-- TODO paidBy...
-       This field will be the most complex field of the Purchase-creation, because we need a list of available people.
-       Best way would be to fetch the list via ajax request and cache it in localStorage?
-       Or maybe only cache the last selected person and fetch the people inside the controller... don't know whether I can pass locals to a partial.
+  <div class="form-group">
+    <label for="input_paidBy"><%= __('purchase_paid_by') %></label>
+    <select class="form-control" id="input_paid_by" name="paidBy">
+       <% _.each(people, function(person) {  %><option value="<%= person.id %>"><%= person.name %></option>
+       <% }) %>  
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="input_description"><%= __('purchase_description') %></label>
+    <textarea class="form-control" rows="4" id="input_description" name="description"></textarea>
+  </div>
 
-  -->
   <button type="submit" class="btn btn-primary"><%= __('btn_create') %></button>
 </form>
