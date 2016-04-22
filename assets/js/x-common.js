@@ -36,6 +36,25 @@ var Common = {
         })
       }
     }
+  },
+
+  Select: {
+    /** This function implements option caching for a <select> element via localStorage
+     *
+     * @param element the jQuery element to apply this to
+     * @param key_name the key to store this value at
+     */
+    local_cache: function(element, key_name) {
+      if (localStorage.getItem(key_name)) { //Do we have a stored selection?
+        var initialValue = element.val()
+        element.val(localStorage.getItem(key_name)) //set stored value
+        if (!element.val()) //stored selection is invalid, restore to previous state
+          element.val(initialValue)
+      }
+
+      //Register all changes
+      $('#input_paid_by').change(function(event) { localStorage.setItem(key_name, $(this).val()) })
+    }
   }
 };
 
